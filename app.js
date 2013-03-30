@@ -20,7 +20,13 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  if (process.env.NODE_ENV === 'production'){
+    console.log('production');
+    app.use(express.static(path.join(__dirname, 'public', 'build', 'FirstStep', 'production')));
+  } else {
+    console.log('development');
+    app.use(express.static(path.join(__dirname, 'public')));
+  }
 });
 
 app.configure('development', function(){
